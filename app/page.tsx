@@ -1,5 +1,6 @@
 'use client';
 
+import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -13,10 +14,11 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (user === 'admin' && password === '123') {
-      alert('¡Login correcto!');
-      router.push('/dashboard'); // 3. Redirigimos al usuario
+      // Guardamos una cookie llamada 'isLoggedIn'
+      setCookie('isLoggedIn', 'true');
+      router.push('/dashboard');
     } else {
-      alert('Credenciales incorrectas (Usa admin / 123)');
+      alert('Credenciales incorrectas');
     }
   };
 
