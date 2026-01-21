@@ -1,30 +1,15 @@
-'use client';
+import Header from '../../components/header';
+import TodoTable from '../../components/todo-table';
+import { todoService } from '../../services/todo-service';
 
-import { deleteCookie } from 'cookies-next';
-import { useRouter } from 'next/navigation';
-
-export default function DashboardPage() {
-  const router = useRouter();
-
-  const handleLogout = () => {
-    deleteCookie('isLoggedIn');
-    router.push('/');
-  };
+export default async function DashboardPage() {
+  const todos = await todoService.getAll();
 
   return (
     <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">Panel de Control</h1>
-          <button
-            onClick={handleLogout}
-            className="ml-4 rounded-md bg-red-600 px-4 py-2 text-white font-semibold hover:bg-red-700 transition-colors shadow-sm"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-        <p className="mt-2 text-gray-600">¡Bienvenido! Has iniciado sesión correctamente.</p>
+      <Header title='Panel de Control' />
 
+      <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
           <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100">
             <h3 className="font-semibold text-blue-600">Tareas</h3>
@@ -39,8 +24,14 @@ export default function DashboardPage() {
             <p className="text-2xl font-bold text-gray-600">4</p>
           </div>
         </div>
+      </div>
 
-
+      <div className="space-y-6">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">Gestión de Tareas</h2>
+          {/* Pasamos los datos del servidor al componente de cliente */}
+          <TodoTable data={todos} />
+        </div>
       </div>
     </main>
   );
