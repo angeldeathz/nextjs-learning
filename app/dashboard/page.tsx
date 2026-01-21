@@ -1,9 +1,9 @@
 import Header from '../../components/header';
-import TodoTable from '../../components/todo-table';
-import { todoService } from '../../services/todo-service';
+import AgGridTable from '../../components/ag-grid-table';
+import { productService } from '../../services/product-service';
 
 export default async function DashboardPage() {
-  const todos = await todoService.getAll();
+  const todos = await productService.getAll();
 
   return (
     <main className="min-h-screen bg-gray-50 p-8">
@@ -30,7 +30,7 @@ export default async function DashboardPage() {
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">Gestión de Tareas</h2>
           {/* Pasamos los datos del servidor al componente de cliente */}
-          <TodoTable data={todos} />
+          <AgGridTable data={todos} />
         </div>
       </div>
     </main>
